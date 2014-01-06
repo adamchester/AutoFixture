@@ -68,19 +68,19 @@ namespace Ploeh.AutoFixture.AutoFakeItEasy
             var type = request as Type;
             if (!type.IsFake())
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             var fake = this.builder.Create(request, context) as FakeItEasy.Configuration.IHideObjectMembers;
             if (fake == null)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             var fakeType = type.GetFakedType();
             if (fake.GetType().GetFakedType() != fakeType)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             return fake;

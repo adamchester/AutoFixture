@@ -144,7 +144,7 @@ namespace Ploeh.AutoFixtureUnitTest
             // Exercise system
             object result = sut.Create(null, dummyContext);
             // Verify outcome
-            Assert.Equal(new NoSpecimen(), result);
+            Assert.Equal(NoSpecimen.Instance, result);
             // Teardown
         }
 
@@ -167,7 +167,7 @@ namespace Ploeh.AutoFixtureUnitTest
         {
             // Fixture setup
             var dummyContext = new DelegatingSpecimenContext();
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             var sut = new RandomNumericSequenceGenerator();
             // Exercise system
             object result = sut.Create(request, dummyContext);
@@ -184,7 +184,7 @@ namespace Ploeh.AutoFixtureUnitTest
         {
             // Fixture setup
             var dummyContext = new DelegatingSpecimenContext();
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             var sut = new RandomNumericSequenceGenerator();
             // Exercise system
             object result = sut.Create(request, dummyContext);

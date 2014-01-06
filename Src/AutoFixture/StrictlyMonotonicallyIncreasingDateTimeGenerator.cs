@@ -34,7 +34,7 @@ namespace Ploeh.AutoFixture
         {
             if (!typeof(DateTime).Equals(request))
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             return this.seed.AddDays(this.GetNextNumberInSequence());

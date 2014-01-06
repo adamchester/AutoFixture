@@ -22,13 +22,13 @@ namespace Ploeh.AutoFixture
         {
             if (request == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             var regularExpressionRequest = request as RegularExpressionRequest;
             if (regularExpressionRequest == null)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             return RegularExpressionGenerator.CreateAnonymous(regularExpressionRequest);
@@ -48,14 +48,14 @@ namespace Ploeh.AutoFixture
             }
             catch (InvalidOperationException)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
             catch (ArgumentException)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
-            return new NoSpecimen(request);
+            return NoSpecimen.Instance;
         }
     }
 }

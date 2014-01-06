@@ -53,7 +53,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(null, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -80,7 +80,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             // Exercise system
             var result = sut.Create(nonTypeRequest, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen(nonTypeRequest);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -96,7 +96,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var dummyContext = new DelegatingSpecimenContext();
             var result = sut.Create(dummyRequest, dummyContext);
             // Verify outcome
-            var expectedResult = new NoSpecimen(dummyRequest);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -106,12 +106,12 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
         {
             // Fixture setup
             var type = typeof(string);
-            var container = new DelegatingSpecimenContext { OnResolve = r => new NoSpecimen(type) };
+            var container = new DelegatingSpecimenContext { OnResolve = r => NoSpecimen.Instance };
             var sut = new MethodInvoker(new ModestConstructorQuery());
             // Exercise system
             var result = sut.Create(type, container);
             // Verify outcome
-            var expectedResult = new NoSpecimen(type);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -125,7 +125,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             // Exercise system
             var result = sut.Create(typeof(AbstractType), container);
             // Verify outcome
-            var expectedResult = new NoSpecimen(typeof(AbstractType));
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -136,7 +136,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             // Fixture setup
             var requestedType = typeof(DoubleParameterType<string, int>);
             var parameters = requestedType.GetConstructors().Single().GetParameters();
-            var container = new DelegatingSpecimenContext { OnResolve = r => parameters[0] == r ? new object() : new NoSpecimen(r) };
+            var container = new DelegatingSpecimenContext { OnResolve = r => parameters[0] == r ? new object() : NoSpecimen.Instance };
             var sut = new MethodInvoker(new ModestConstructorQuery());
             // Exercise system
             var result = sut.Create(requestedType, container);
@@ -240,7 +240,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
                         return expectedNumber;
                     }
                 }
-                return new NoSpecimen(r);
+                return NoSpecimen.Instance;
             };
             // Exercise system
             var result = sut.Create(requestedType, context);

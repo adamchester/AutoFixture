@@ -45,7 +45,7 @@ namespace Ploeh.AutoFixture
         {
             if (!typeof(ushort).Equals(request))
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             return this.CreateAnonymous();

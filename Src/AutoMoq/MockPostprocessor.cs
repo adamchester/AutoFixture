@@ -51,19 +51,19 @@ namespace Ploeh.AutoFixture.AutoMoq
             var t = request as Type;
             if (!t.IsMock())
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }            
 
             var m = this.builder.Create(request, context) as Mock;
             if (m == null)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             var mockType = t.GetMockedType();
             if (m.GetType().GetMockedType() != mockType)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             var configurator = (IMockConfigurator)Activator.CreateInstance(typeof(MockConfigurator<>).MakeGenericType(mockType));

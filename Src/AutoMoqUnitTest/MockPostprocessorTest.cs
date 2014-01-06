@@ -60,7 +60,7 @@ namespace Ploeh.AutoFixture.AutoMoq.UnitTest
             var dummyContext = new Mock<ISpecimenContext>().Object;
             var result = sut.Create(request, dummyContext);
             // Verify outcome
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -100,7 +100,7 @@ namespace Ploeh.AutoFixture.AutoMoq.UnitTest
             // Exercise system
             var result = sut.Create(request, context);
             // Verify outcome
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -119,7 +119,7 @@ namespace Ploeh.AutoFixture.AutoMoq.UnitTest
             // Exercise system
             var result = sut.Create(request, context);
             // Verify outcome
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }

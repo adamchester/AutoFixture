@@ -19,7 +19,7 @@ namespace Ploeh.AutoFixture
         {
             if (!typeof(UriScheme).Equals(request))
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             return new UriScheme();

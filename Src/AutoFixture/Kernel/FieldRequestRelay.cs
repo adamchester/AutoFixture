@@ -29,7 +29,7 @@ namespace Ploeh.AutoFixture.Kernel
             var fieldInfo = request as FieldInfo;
             if (fieldInfo == null)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             return context.Resolve(new SeededRequest(fieldInfo.FieldType, fieldInfo.Name));

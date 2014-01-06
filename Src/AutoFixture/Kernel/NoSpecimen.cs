@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace Ploeh.AutoFixture.Kernel
 {
@@ -14,66 +15,17 @@ namespace Ploeh.AutoFixture.Kernel
     /// </remarks>
     public class NoSpecimen : IEquatable<NoSpecimen>
     {
-        private readonly object request;
+        /// <summary>
+        /// 
+        /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
+        public static readonly NoSpecimen Instance = new NoSpecimen();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NoSpecimen"/> class with a null request.
         /// </summary>
-        public NoSpecimen()
+        private NoSpecimen()
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NoSpecimen"/> class with the supplied
-        /// request.
-        /// </summary>
-        /// <param name="request">
-        /// The original request that prompts the creation of this instance.
-        /// </param>
-        public NoSpecimen(object request)
-        {
-            this.request = request;
-        }
-
-        /// <summary>
-        /// Gets the original request that prompted the creation of the current instance.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// This property value may be <see langword="null"/>.
-        /// </para>
-        /// </remarks>
-        public object Request
-        {
-            get { return this.request; }
-        }
-
-        /// <summary>
-        /// Determines whether the specified <see cref="object"/> is equal to the current
-        /// <see cref="NoSpecimen"/> instance.
-        /// </summary>
-        /// <param name="obj">The <see cref="object"/> to compare to the current instance.</param>
-        /// <returns>
-        /// <see langword="true"/> if the specified <see cref="object"/> is equal to the current
-        /// instance; otherwise, <see langword="false"/>.
-        /// </returns>
-        public override bool Equals(object obj)
-        {
-            var other = obj as NoSpecimen;
-            if (other != null)
-            {
-                return this.Equals(other);
-            }
-            return base.Equals(obj);
-        }
-
-        /// <summary>
-        /// Serves as a hash function for the <see cref="NoSpecimen"/> class.
-        /// </summary>
-        /// <returns>A hash code for the current <see cref="NoSpecimen"/> instance.</returns>
-        public override int GetHashCode()
-        {
-            return this.Request == null ? 0 : this.Request.GetHashCode();
         }
 
         /// <summary>
@@ -94,7 +46,7 @@ namespace Ploeh.AutoFixture.Kernel
                 return false;
             }
         
-            return object.Equals(this.Request, other.Request);
+            return object.Equals(this, other);
         }
     }
 }

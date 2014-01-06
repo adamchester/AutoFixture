@@ -87,7 +87,7 @@ namespace Ploeh.AutoFixtureUnitTest.Dsl
             {
                 OnCreate = (r, c) => r == request && c == context ?
                     expected :
-                    new NoSpecimen(r)
+                    NoSpecimen.Instance
             };
             var sut = new CompositeNodeComposer<ushort>(
                 new CompositeSpecimenBuilder(

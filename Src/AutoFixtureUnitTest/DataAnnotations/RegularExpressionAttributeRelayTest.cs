@@ -31,7 +31,7 @@ namespace Ploeh.AutoFixtureUnitTest.DataAnnotations
             var dummyContext = new DelegatingSpecimenContext();
             var result = sut.Create(null, dummyContext);
             // Verify outcome
-            Assert.Equal(new NoSpecimen(), result);
+            Assert.Equal(NoSpecimen.Instance, result);
             // Teardown
         }
 
@@ -57,7 +57,7 @@ namespace Ploeh.AutoFixtureUnitTest.DataAnnotations
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(dymmyRequest, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen(dymmyRequest);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -78,7 +78,7 @@ namespace Ploeh.AutoFixtureUnitTest.DataAnnotations
             var dummyContext = new DelegatingSpecimenContext();
             var result = sut.Create(request, dummyContext);
             // Verify outcome
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -97,7 +97,7 @@ namespace Ploeh.AutoFixtureUnitTest.DataAnnotations
             var expectedResult = new object();
             var context = new DelegatingSpecimenContext
             {
-                OnResolve = r => expectedRequest.Equals(r) ? expectedResult : new NoSpecimen(r)
+                OnResolve = r => expectedRequest.Equals(r) ? expectedResult : NoSpecimen.Instance
             };
             var sut = new RegularExpressionAttributeRelay();
             // Exercise system

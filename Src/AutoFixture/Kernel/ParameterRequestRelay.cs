@@ -29,7 +29,7 @@ namespace Ploeh.AutoFixture.Kernel
             var paramInfo = request as ParameterInfo;
             if (paramInfo == null)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             return context.Resolve(new SeededRequest(paramInfo.ParameterType, paramInfo.Name));

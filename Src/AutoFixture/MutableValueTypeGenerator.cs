@@ -33,7 +33,7 @@ namespace Ploeh.AutoFixture
             Type type = request as Type;
             if (type == null || !valueTypeWithoutConstructorsSpecification.IsSatisfiedBy(type))
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
             
             return Activator.CreateInstance(type);

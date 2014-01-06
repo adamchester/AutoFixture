@@ -28,7 +28,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContext = new DelegatingSpecimenContext();
             var result = sut.Create(null, dummyContext);
             // Verify outcome
-            Assert.Equal(new NoSpecimen(), result);
+            Assert.Equal(NoSpecimen.Instance, result);
             // Teardown
         }
 
@@ -53,7 +53,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContext = new DelegatingSpecimenContext();
             var result = sut.Create(dummyRequest, dummyContext);
             // Verify outcome
-            var expectedResult = new NoSpecimen(dummyRequest);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -66,12 +66,12 @@ namespace Ploeh.AutoFixtureUnitTest
             object expectedValue = null;
             var context = new DelegatingSpecimenContext
             {
-                OnResolve = r => typeof(UriScheme).Equals(r) ? expectedValue : new NoSpecimen(r)
+                OnResolve = r => typeof(UriScheme).Equals(r) ? expectedValue : NoSpecimen.Instance
             };
             var sut = new UriGenerator();
             // Exercise system and verify outcome
             var result = sut.Create(request, context);
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -96,13 +96,13 @@ namespace Ploeh.AutoFixtureUnitTest
                         return expectedValue;
                     }
 
-                    return new NoSpecimen(r);
+                    return NoSpecimen.Instance;
                 }
             };
             var sut = new UriGenerator();
             // Exercise system and verify outcome
             var result = sut.Create(request, context);
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -127,7 +127,7 @@ namespace Ploeh.AutoFixtureUnitTest
                         return Guid.NewGuid().ToString();
                     }
 
-                    return new NoSpecimen(r);
+                    return NoSpecimen.Instance;
                 }
             };
             var sut = new UriGenerator();
@@ -158,7 +158,7 @@ namespace Ploeh.AutoFixtureUnitTest
                         return expectedAuthority;
                     }
 
-                    return new NoSpecimen(r);
+                    return NoSpecimen.Instance;
                 }
             };
             var sut = new UriGenerator();
@@ -190,7 +190,7 @@ namespace Ploeh.AutoFixtureUnitTest
                         return expectedAuthority;
                     }
 
-                    return new NoSpecimen(r);
+                    return NoSpecimen.Instance;
                 }
             };
             var sut = new UriGenerator();

@@ -40,7 +40,7 @@ namespace Ploeh.AutoFixture
         public object Create(object request, ISpecimenContext context)
         {
             if (request == null)
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             if (context == null)
                 throw new ArgumentNullException("context");
@@ -48,7 +48,7 @@ namespace Ploeh.AutoFixture
             var rangedNumberRequest = request as RangedNumberRequest;
             
             if (rangedNumberRequest == null)
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
 
             try
             {
@@ -56,7 +56,7 @@ namespace Ploeh.AutoFixture
             }
             catch (ArgumentException)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }           
         }
 

@@ -74,15 +74,15 @@ namespace Ploeh.AutoFixture.AutoMoq
                 throw new ArgumentNullException("context");
 
             if (!this.mockableSpecification.IsSatisfiedBy(request))
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
 
             var t = request as Type;
             if (t == null)
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
 
             var m = MockRelay.ResolveMock(t, context);
             if (m == null)
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
 
             return m.Object;
         }

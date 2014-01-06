@@ -69,10 +69,10 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var container = new DelegatingSpecimenContext();
             container.OnResolve = r => (from x in subRequests
                                         where x.ExpectedRequest.Equals(r)
-                                        select x.Specimen).DefaultIfEmpty(new NoSpecimen(r)).SingleOrDefault();
+                                        select x.Specimen).DefaultIfEmpty(NoSpecimen.Instance).SingleOrDefault();
 
             Func<decimal, TimeSpan, string, int, object> f = (d, ts, s, i) =>
-                param1.Specimen.Equals(d) && param2.Specimen.Equals(ts) && param3.Specimen.Equals(s) && param4.Specimen.Equals(i) ? expectedSpecimen : new NoSpecimen();
+                param1.Specimen.Equals(d) && param2.Specimen.Equals(ts) && param3.Specimen.Equals(s) && param4.Specimen.Equals(i) ? expectedSpecimen : NoSpecimen.Instance;
             var sut = new SpecimenFactory<decimal, TimeSpan, string, int, object>(f);
             // Exercise system
             var dummyRequest = new object();

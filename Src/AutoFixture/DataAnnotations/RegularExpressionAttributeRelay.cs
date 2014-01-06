@@ -23,7 +23,7 @@ namespace Ploeh.AutoFixture.DataAnnotations
         {
             if (request == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             if (context == null)
@@ -34,13 +34,13 @@ namespace Ploeh.AutoFixture.DataAnnotations
             var customAttributeProvider = request as ICustomAttributeProvider;
             if (customAttributeProvider == null)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             var regularExpressionAttribute = customAttributeProvider.GetCustomAttributes(typeof(RegularExpressionAttribute), inherit: true).Cast<RegularExpressionAttribute>().SingleOrDefault();
             if (regularExpressionAttribute == null)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             return context.Resolve(new RegularExpressionRequest(regularExpressionAttribute.Pattern));

@@ -79,7 +79,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(request, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -96,7 +96,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(request, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -109,7 +109,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var count = 7;
             var expectedTranslation = new FiniteSequenceRequest(request.Request, 7);
             var expectedResult = new object();
-            var container = new DelegatingSpecimenContext { OnResolve = r => expectedTranslation.Equals(r) ? expectedResult : new NoSpecimen(r) };
+            var container = new DelegatingSpecimenContext { OnResolve = r => expectedTranslation.Equals(r) ? expectedResult : NoSpecimen.Instance };
 
             var sut = new MultipleRelay { Count = count };
             // Exercise system

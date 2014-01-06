@@ -57,7 +57,7 @@ namespace Ploeh.AutoFixture.AutoRhinoMock.UnitTest
             var dummyContext = MockRepository.GenerateMock<ISpecimenContext>();
             var result = sut.Create(request, dummyContext);
             // Verify outcome
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }

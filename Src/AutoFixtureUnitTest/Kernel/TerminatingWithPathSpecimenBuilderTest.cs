@@ -199,7 +199,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var tracer = new DelegatingTracingBuilder(new DelegatingSpecimenBuilder
             {
                 // Returns NoSpecimen only on the last specimen request
-                OnCreate = (r, c) => (r == requests[2]) ? new NoSpecimen() : new object(),
+                OnCreate = (r, c) => (r == requests[2]) ? NoSpecimen.Instance : new object(),
             });
 
             var sut = new TerminatingWithPathSpecimenBuilder(tracer);

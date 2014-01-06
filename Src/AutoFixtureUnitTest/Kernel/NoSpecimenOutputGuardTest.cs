@@ -113,7 +113,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var request = new object();
             var context = new DelegatingSpecimenContext();
             var expectedResult = new object();
-            var builder = new DelegatingSpecimenBuilder { OnCreate = (r, c) => r == request && c == context ? expectedResult : new NoSpecimen(r) };
+            var builder = new DelegatingSpecimenBuilder { OnCreate = (r, c) => r == request && c == context ? expectedResult : NoSpecimen.Instance };
 
             var sut = new NoSpecimenOutputGuard(builder);
             // Exercise system
@@ -127,7 +127,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
         public void CreateThrowsWhenDecoratedBuilderReturnsNoSpecimen()
         {
             // Fixture setup
-            var builder = new DelegatingSpecimenBuilder { OnCreate = (r, c) => new NoSpecimen(r) };
+            var builder = new DelegatingSpecimenBuilder { OnCreate = (r, c) => NoSpecimen.Instance };
             var sut = new NoSpecimenOutputGuard(builder);
             // Exercise system and verify outcome
             var dummyRequest = new object();
@@ -143,14 +143,14 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             // Fixture setup            
             var request = new object();
 
-            var builder = new DelegatingSpecimenBuilder { OnCreate = (r, c) => new NoSpecimen(r) };
+            var builder = new DelegatingSpecimenBuilder { OnCreate = (r, c) => NoSpecimen.Instance };
             var spec = new DelegatingRequestSpecification { OnIsSatisfiedBy = r => request == r ? false : true };
             var sut = new NoSpecimenOutputGuard(builder, spec);
             // Exercise system
             var dummyContext = new DelegatingSpecimenContext();
             var result = sut.Create(request, dummyContext);
             // Verify outcome
-            var expectedResult = new NoSpecimen(request);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }

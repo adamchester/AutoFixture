@@ -27,7 +27,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(null, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -54,7 +54,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(nonParameterRequest, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen(nonParameterRequest);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -64,12 +64,12 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
         {
             // Fixture setup
             var propertyInfo = typeof(PropertyHolder<object>).GetProperty("Property");
-            var container = new DelegatingSpecimenContext { OnResolve = r => new NoSpecimen(propertyInfo) };
+            var container = new DelegatingSpecimenContext { OnResolve = r => NoSpecimen.Instance };
             var sut = new PropertyRequestRelay();
             // Exercise system
             var result = sut.Create(propertyInfo, container);
             // Verify outcome
-            var expectedResult = new NoSpecimen(propertyInfo);
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }

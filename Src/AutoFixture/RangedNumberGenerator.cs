@@ -34,7 +34,7 @@ namespace Ploeh.AutoFixture
         {
             if (request == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             if (context == null)
@@ -45,13 +45,13 @@ namespace Ploeh.AutoFixture
             var range = request as RangedNumberRequest;
             if (range == null)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             var value = context.Resolve(range.OperandType) as IComparable;
             if (value == null)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             try
@@ -60,7 +60,7 @@ namespace Ploeh.AutoFixture
             }
             catch (InvalidOperationException)
             {
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
             }
 
             return this.rangedValue;

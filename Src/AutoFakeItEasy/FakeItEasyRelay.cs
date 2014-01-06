@@ -70,17 +70,17 @@ namespace Ploeh.AutoFixture.AutoFakeItEasy
                 throw new ArgumentNullException("context");
 
             if (!this.fakeableSpecification.IsSatisfiedBy(request))
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
 
             var type = request as Type;
             if (type == null)
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
 
             var fakeType = typeof(Fake<>).MakeGenericType(type);
 
             var fake = context.Resolve(fakeType) as FakeItEasy.Configuration.IHideObjectMembers;
             if (fake == null)
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
 
             return fake.GetType().GetProperty("FakedObject").GetValue(fake, null);
         }

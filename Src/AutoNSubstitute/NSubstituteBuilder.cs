@@ -75,11 +75,11 @@ namespace Ploeh.AutoFixture.AutoNSubstitute
         public object Create(object request, ISpecimenContext context)
         {
             if (!SubstitutionSpecification.IsSatisfiedBy(request))
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
 
             var substitute = Builder.Create(request, context);
             if (substitute == null)
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
 
             return substitute;
         }

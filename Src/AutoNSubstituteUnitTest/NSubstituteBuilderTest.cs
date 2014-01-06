@@ -101,7 +101,7 @@ namespace Ploeh.AutoFixture.AutoNSubstitute.UnitTest
             var result = sut.Create(request, context);
 
             // Verify outcome
-            var expected = new NoSpecimen(request);
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, result);
         }
 
@@ -137,7 +137,7 @@ namespace Ploeh.AutoFixture.AutoNSubstitute.UnitTest
             var result = sut.Create(request, context);
 
             // Verify outcome
-            var expected = new NoSpecimen(request);
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, result);
         }
 
@@ -156,7 +156,7 @@ namespace Ploeh.AutoFixture.AutoNSubstitute.UnitTest
             var result = sut.Create(request, context);
 
             // Verify outcome
-            var expected = new NoSpecimen(request);
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, result);
         }
     }

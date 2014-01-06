@@ -268,7 +268,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
         public void CreateReturnsCorrectResultWhenBuilderReturnsNoSpecimen()
         {
             // Fixture setup
-            var builder = new DelegatingSpecimenBuilder { OnCreate = (r, c) => new NoSpecimen() };
+            var builder = new DelegatingSpecimenBuilder { OnCreate = (r, c) => NoSpecimen.Instance };
 
             var dummyCommand = new DelegatingSpecimenCommand();
             var sut = new Postprocessor<int>(builder, dummyCommand);

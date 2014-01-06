@@ -35,7 +35,7 @@ namespace Ploeh.AutoFixture
         public object Create(object request, ISpecimenContext context)
         {
             if (!typeof(char).Equals(request))
-                return new NoSpecimen(request);
+                return NoSpecimen.Instance;
 
             return Convert.ToChar(
                 this.randomPrintableCharNumbers.Create(typeof(int), context),
