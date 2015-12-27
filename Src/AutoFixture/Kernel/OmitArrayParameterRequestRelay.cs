@@ -59,10 +59,10 @@ namespace Ploeh.AutoFixture.Kernel
 
             var pi = request as ParameterInfo;
             if (pi == null)
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             if (!pi.ParameterType.IsArray)
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             var returnValue = context.Resolve(
                 new SeededRequest(

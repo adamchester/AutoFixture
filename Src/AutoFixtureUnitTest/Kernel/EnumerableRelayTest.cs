@@ -56,7 +56,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var dummyContext = new DelegatingSpecimenContext { OnResolve = r => Enumerable.Empty<object>() };
             var result = sut.Create(request, dummyContext);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -71,7 +71,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             // Fixture setup
             var expectedRequest = new MultipleRequest(itemType);
             object contextResult = Enumerable.Empty<object>();
-            var context = new DelegatingSpecimenContext { OnResolve = r => expectedRequest.Equals(r) ? contextResult : new NoSpecimen() };
+            var context = new DelegatingSpecimenContext { OnResolve = r => expectedRequest.Equals(r) ? contextResult : NoSpecimen.Instance };
 
             var sut = new EnumerableRelay();
             // Exercise system
@@ -88,7 +88,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var request = typeof(IEnumerable<int>);
             var expectedRequest = new MultipleRequest(typeof(int));
             var enumerable = Enumerable.Range(1, 3).Cast<object>();
-            var context = new DelegatingSpecimenContext { OnResolve = r => expectedRequest.Equals(r) ? (object)enumerable : new NoSpecimen() };
+            var context = new DelegatingSpecimenContext { OnResolve = r => expectedRequest.Equals(r) ? (object)enumerable : NoSpecimen.Instance };
 
             var sut = new EnumerableRelay();
             // Exercise system
@@ -113,7 +113,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             // Exercise system
             var result = sut.Create(request, context);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -133,7 +133,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             };
             var context = new DelegatingSpecimenContext
             {
-                OnResolve = r => expectedRequest.Equals(r) ? (object)enumerable : new NoSpecimen()
+                OnResolve = r => expectedRequest.Equals(r) ? (object)enumerable : NoSpecimen.Instance
             };
 
             var sut = new EnumerableRelay();

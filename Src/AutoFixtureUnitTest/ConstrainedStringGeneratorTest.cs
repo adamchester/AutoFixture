@@ -32,7 +32,7 @@ namespace Ploeh.AutoFixtureUnitTest
             // Exercise system
             var result = sut.Create(null, dummyContext);
             // Verify outcome
-            Assert.Equal(new NoSpecimen(), result);
+            Assert.Equal(NoSpecimen.Instance, result);
             // Teardown
         }
 
@@ -57,7 +57,7 @@ namespace Ploeh.AutoFixtureUnitTest
             // Exercise system
             var result = sut.Create(request, dummyContext);
             // Verify outcome
-            Assert.Equal(new NoSpecimen(), result);
+            Assert.Equal(NoSpecimen.Instance, result);
             // Teardown
         }
 
@@ -70,7 +70,7 @@ namespace Ploeh.AutoFixtureUnitTest
             object contextValue = Guid.NewGuid().ToString();
             var context = new DelegatingSpecimenContext
             {
-                OnResolve = r => expectedType.Equals(r) ? contextValue : new NoSpecimen()
+                OnResolve = r => expectedType.Equals(r) ? contextValue : NoSpecimen.Instance
             };
             var sut = new ConstrainedStringGenerator();
             // Exercise system
@@ -88,7 +88,7 @@ namespace Ploeh.AutoFixtureUnitTest
             object expectedValue = Guid.NewGuid().ToString();
             var context = new DelegatingSpecimenContext
             {
-                OnResolve = r => typeof(string).Equals(r) ? expectedValue : new NoSpecimen()
+                OnResolve = r => typeof(string).Equals(r) ? expectedValue : NoSpecimen.Instance
             };
             var sut = new ConstrainedStringGenerator();
             // Exercise system and verify outcome
@@ -105,7 +105,7 @@ namespace Ploeh.AutoFixtureUnitTest
             object contextValue = Guid.NewGuid().ToString();
             var context = new DelegatingSpecimenContext
             {
-                OnResolve = r => typeof(string).Equals(r) ? contextValue : new NoSpecimen()
+                OnResolve = r => typeof(string).Equals(r) ? contextValue : NoSpecimen.Instance
             };
             var sut = new ConstrainedStringGenerator();
             // Exercise system
@@ -123,7 +123,7 @@ namespace Ploeh.AutoFixtureUnitTest
             object contextValue = Guid.NewGuid().ToString();
             var context = new DelegatingSpecimenContext
             {
-                OnResolve = r => typeof(string).Equals(r) ? contextValue : new NoSpecimen()
+                OnResolve = r => typeof(string).Equals(r) ? contextValue : NoSpecimen.Instance
             };
             var sut = new ConstrainedStringGenerator();
             // Exercise system

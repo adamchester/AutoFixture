@@ -59,7 +59,7 @@ namespace Ploeh.AutoFixture
             }
 
             return IsNotDateTimeRequest(request)
-                       ? new NoSpecimen()
+                       ? NoSpecimen.Instance
                        : this.CreateRandomDate(context);
         }
 

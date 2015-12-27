@@ -41,7 +41,7 @@ namespace Ploeh.AutoFixture
         {
             if (!typeof(Guid).Equals(request))
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return GuidGenerator.Create();

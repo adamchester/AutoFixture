@@ -28,7 +28,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(null, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -55,7 +55,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(nonSeed, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -70,7 +70,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(nonStringRequestSeed, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -85,7 +85,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(nonStringSeed, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -96,11 +96,11 @@ namespace Ploeh.AutoFixtureUnitTest
             // Fixture setup
             var sut = new StringSeedRelay();
             var stringSeed = new SeededRequest(typeof(string), "Anonymous value");
-            var unableContainer = new DelegatingSpecimenContext { OnResolve = r => new NoSpecimen() };
+            var unableContainer = new DelegatingSpecimenContext { OnResolve = r => NoSpecimen.Instance };
             // Exercise system
             var result = sut.Create(stringSeed, unableContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }

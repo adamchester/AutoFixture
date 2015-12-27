@@ -22,7 +22,7 @@ namespace Ploeh.AutoFixtureUnitTest
 
             var actual = sut.Create(null, new DelegatingSpecimenContext());
 
-            Assert.Equal(new NoSpecimen(), actual);
+            Assert.Equal(NoSpecimen.Instance, actual);
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var sut = new InvariantCultureGenerator();
             var actual = sut.Create(new object(), new DelegatingSpecimenContext());
 
-            Assert.Equal(new NoSpecimen(), actual);
+            Assert.Equal(NoSpecimen.Instance, actual);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var sut = new InvariantCultureGenerator();
             var actual = sut.Create(typeof(object), new DelegatingSpecimenContext());
 
-            Assert.Equal(new NoSpecimen(), actual);
+            Assert.Equal(NoSpecimen.Instance, actual);
         }
 
         [Fact]

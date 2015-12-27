@@ -60,7 +60,7 @@ namespace Ploeh.AutoFixtureUnitTest
 
             var expectedRequest = new MultipleRequest(typeof(KeyValuePair<int, string>));
             var expectedResult = Enumerable.Range(1, 3).Select(i => new KeyValuePair<int, string>(i, i.ToString()));
-            var context = new DelegatingSpecimenContext { OnResolve = r => expectedRequest.Equals(r) ? (object)expectedResult : new NoSpecimen() };
+            var context = new DelegatingSpecimenContext { OnResolve = r => expectedRequest.Equals(r) ? (object)expectedResult : NoSpecimen.Instance };
             // Exercise system
             DictionaryFiller.AddMany(dictionary, context);
             // Verify outcome
@@ -121,7 +121,7 @@ namespace Ploeh.AutoFixtureUnitTest
 
             var expectedRequest = new MultipleRequest(typeof(KeyValuePair<int, string>));
             var expectedResult = Enumerable.Range(1, 3).Select(i => new KeyValuePair<int, string>(i, i.ToString()));
-            var context = new DelegatingSpecimenContext { OnResolve = r => expectedRequest.Equals(r) ? (object)expectedResult : new NoSpecimen() };
+            var context = new DelegatingSpecimenContext { OnResolve = r => expectedRequest.Equals(r) ? (object)expectedResult : NoSpecimen.Instance };
 
             var sut = new DictionaryFiller();
             // Exercise system
@@ -139,7 +139,7 @@ namespace Ploeh.AutoFixtureUnitTest
 
             var request = new MultipleRequest(typeof(KeyValuePair<int, string>));
             var sequence = Enumerable.Repeat(0, 3).Select(i => new KeyValuePair<int, string>(i, i.ToString()));
-            var context = new DelegatingSpecimenContext { OnResolve = r => request.Equals(r) ? (object)sequence : new NoSpecimen() };
+            var context = new DelegatingSpecimenContext { OnResolve = r => request.Equals(r) ? (object)sequence : NoSpecimen.Instance };
 
             var sut = new DictionaryFiller();
             // Exercise system & Verify outcome

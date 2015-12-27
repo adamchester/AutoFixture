@@ -51,7 +51,7 @@ namespace Ploeh.AutoFixture.AutoNSubstitute.UnitTest
             // Exercise system
             object result = sut.Create(request, context);
             // Verify outcome
-            var expected = new NoSpecimen();
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, result);
             // Teardown
         }

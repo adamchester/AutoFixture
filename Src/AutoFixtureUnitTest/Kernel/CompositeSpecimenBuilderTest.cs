@@ -156,7 +156,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var expectedResult = new object();
             var builders = new ISpecimenBuilder[]
             {
-                new DelegatingSpecimenBuilder { OnCreate = (r, c) => new NoSpecimen() },
+                new DelegatingSpecimenBuilder { OnCreate = (r, c) => NoSpecimen.Instance },
                 new DelegatingSpecimenBuilder { OnCreate = (r, c) => expectedResult },
                 new DelegatingSpecimenBuilder { OnCreate = (r, c) => new object() }
             };
@@ -176,9 +176,9 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             // Fixture setup
             var builders = new ISpecimenBuilder[]
             {
-                new DelegatingSpecimenBuilder { OnCreate = (r, c) => new NoSpecimen() },
-                new DelegatingSpecimenBuilder { OnCreate = (r, c) => new NoSpecimen() },
-                new DelegatingSpecimenBuilder { OnCreate = (r, c) => new NoSpecimen() }
+                new DelegatingSpecimenBuilder { OnCreate = (r, c) => NoSpecimen.Instance },
+                new DelegatingSpecimenBuilder { OnCreate = (r, c) => NoSpecimen.Instance },
+                new DelegatingSpecimenBuilder { OnCreate = (r, c) => NoSpecimen.Instance }
             };
             var sut = new CompositeSpecimenBuilder(builders);
             // Exercise system
@@ -186,7 +186,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(anonymousRequest, dummyContainer);
             // Verify outcome
-            var expected = new NoSpecimen();
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, result);
             // Teardown
         }

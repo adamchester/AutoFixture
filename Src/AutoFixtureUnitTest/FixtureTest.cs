@@ -294,7 +294,7 @@ namespace Ploeh.AutoFixtureUnitTest
         public void CreateOnMultipleThreadsConcurrentlyGeneratesPopulatedSpecimens()
         {
             // Fixture setup
-            const int specimenCountPerThread = 25;
+            const int specimenCountPerThread = 2000;
             const int threadCount = 8;
             var sut = new Fixture();
 

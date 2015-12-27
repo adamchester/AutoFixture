@@ -21,7 +21,7 @@ namespace Ploeh.AutoFixture
         {
             if (request == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             if (context == null)
@@ -32,7 +32,7 @@ namespace Ploeh.AutoFixture
             var constrain = request as ConstrainedStringRequest;
             if (constrain == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return ConstrainedStringGenerator.Create(constrain.MinimumLength, constrain.MaximumLength, context);

@@ -21,7 +21,7 @@ namespace Ploeh.AutoFixture
         {
             if (!typeof(DateTime).Equals(request))
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return DateTime.Now;

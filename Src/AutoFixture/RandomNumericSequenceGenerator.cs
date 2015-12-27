@@ -88,7 +88,7 @@ namespace Ploeh.AutoFixture
             var type = request as Type;
             if (type == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return this.CreateRandom(type);
@@ -151,7 +151,7 @@ namespace Ploeh.AutoFixture
                         this.GetNextRandom();
 
                 default:
-                    return new NoSpecimen();
+                    return NoSpecimen.Instance;
             }
         }
 

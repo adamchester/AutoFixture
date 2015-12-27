@@ -35,7 +35,7 @@ namespace Ploeh.AutoFixture.Kernel
             var manyRequest = request as FiniteSequenceRequest;
             if (manyRequest == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return from req in manyRequest.CreateRequests()

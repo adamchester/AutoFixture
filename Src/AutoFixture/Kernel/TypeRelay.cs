@@ -84,7 +84,7 @@ namespace Ploeh.AutoFixture.Kernel
             
             var t = request as Type;
             if (t == null || t != this.from)
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             return context.Resolve(this.to);
         }

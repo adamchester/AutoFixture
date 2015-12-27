@@ -39,7 +39,7 @@ namespace Ploeh.AutoFixture.Kernel
             var seededRequest = request as SeededRequest;
             if (seededRequest == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return context.Resolve(seededRequest.Request);

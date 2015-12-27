@@ -46,7 +46,7 @@ namespace Ploeh.AutoFixture
             var t = request as Type;
             if (!EnumGenerator.IsEnumType(t))
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             lock (this.syncRoot)

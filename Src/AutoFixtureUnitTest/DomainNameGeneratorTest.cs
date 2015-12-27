@@ -28,7 +28,7 @@ namespace Ploeh.AutoFixtureUnitTest
             // Exercise system
             var result = sut.Create(null, null);
             // Verify outcome
-            Assert.Equal(new NoSpecimen(), result);
+            Assert.Equal(NoSpecimen.Instance, result);
             // Teardown
         }
 
@@ -41,7 +41,7 @@ namespace Ploeh.AutoFixtureUnitTest
             // Exercise system
             var result = sut.Create(nonDomainNameRequest, null);
             // Verify outcome
-            Assert.Equal(new NoSpecimen(), result);
+            Assert.Equal(NoSpecimen.Instance, result);
             // Teardown
         }
 

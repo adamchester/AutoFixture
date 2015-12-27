@@ -25,7 +25,7 @@ namespace Ploeh.AutoFixture.DataAnnotations
         {
             if (request == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             if (context == null)
@@ -36,13 +36,13 @@ namespace Ploeh.AutoFixture.DataAnnotations
             var customAttributeProvider = request as ICustomAttributeProvider;
             if (customAttributeProvider == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             var stringLengthAttribute = customAttributeProvider.GetCustomAttributes(typeof(StringLengthAttribute), inherit: true).Cast<StringLengthAttribute>().SingleOrDefault();
             if (stringLengthAttribute == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return context.Resolve(new ConstrainedStringRequest(stringLengthAttribute.MaximumLength));

@@ -100,7 +100,7 @@ namespace Ploeh.AutoFixtureUnitTest
                 OnCreate = (request, ctx) =>
                     request.Equals(frozenType)
                         ? new object()
-                        : new NoSpecimen()
+                        : NoSpecimen.Instance
             };
             var sut = new FreezeOnMatchCustomization(
                 frozenType,

@@ -28,7 +28,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(null, dummyContainer);
             // Verify outcome
-            Assert.Equal(new NoSpecimen(), result);
+            Assert.Equal(NoSpecimen.Instance, result);
             // Teardown
         }
 
@@ -53,7 +53,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(nonDateTimeRequest, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }

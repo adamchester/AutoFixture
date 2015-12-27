@@ -59,7 +59,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var dummyContext = new DelegatingSpecimenContext();
             var result = sut.Create(request, dummyContext);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -74,7 +74,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             // Fixture setup
             var expectedRequest = typeof(Dictionary<,>).MakeGenericType(keyType, itemType);
             object contextResult = typeof(Dictionary<,>).MakeGenericType(keyType, itemType).GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
-            var context = new DelegatingSpecimenContext { OnResolve = r => expectedRequest.Equals(r) ? contextResult : new NoSpecimen() };
+            var context = new DelegatingSpecimenContext { OnResolve = r => expectedRequest.Equals(r) ? contextResult : NoSpecimen.Instance };
 
             var sut = new DictionaryRelay();
             // Exercise system

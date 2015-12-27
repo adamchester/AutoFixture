@@ -66,7 +66,7 @@ namespace Ploeh.AutoFixture
         {
             if (!typeof(bool).Equals(request))
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return this.Create();

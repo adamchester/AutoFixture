@@ -65,7 +65,7 @@ namespace Ploeh.AutoFixture.Kernel
         {
             if (!this.specification.IsSatisfiedBy(request))
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return this.builder.Create(request, context);

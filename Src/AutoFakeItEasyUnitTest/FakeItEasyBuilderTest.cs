@@ -58,7 +58,7 @@ namespace Ploeh.AutoFixture.AutoFakeItEasy.UnitTest
             var dummyContext = A.Fake<ISpecimenContext>();
             var result = sut.Create(request, dummyContext);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -95,7 +95,7 @@ namespace Ploeh.AutoFixture.AutoFakeItEasy.UnitTest
             // Exercise system
             var result = sut.Create(request, context);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -115,7 +115,7 @@ namespace Ploeh.AutoFixture.AutoFakeItEasy.UnitTest
             // Exercise system
             var result = sut.Create(request, context);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -134,7 +134,7 @@ namespace Ploeh.AutoFixture.AutoFakeItEasy.UnitTest
             // Exercise system
             var result = sut.Create(request, context);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }

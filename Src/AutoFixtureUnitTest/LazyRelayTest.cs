@@ -55,7 +55,7 @@ namespace Ploeh.AutoFixtureUnitTest
             // Exercise system
             var actual = sut.Create(request, dummyContext);
             // Verify outcome
-            var expected = new NoSpecimen();
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, actual);
             // Teardown
         }
@@ -73,7 +73,7 @@ namespace Ploeh.AutoFixtureUnitTest
             // Exercise system
             var actual = sut.Create(request, dummyContext);
             // Verify outcome
-            var expected = new NoSpecimen();
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, actual);
             // Teardown
         }
@@ -91,7 +91,7 @@ namespace Ploeh.AutoFixtureUnitTest
             // Exercise system
             var actual = sut.Create(request, dummyContext);
             // Verify outcome
-            var expected = new NoSpecimen();
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, actual);
             // Teardown
         }

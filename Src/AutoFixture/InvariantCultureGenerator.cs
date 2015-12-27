@@ -26,10 +26,10 @@ namespace Ploeh.AutoFixture
         public object Create(object request, ISpecimenContext context)
         {
             if (request == null)
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             if (!cultureTypeSpecification.IsSatisfiedBy(request))
-                return new NoSpecimen(); ;
+                return NoSpecimen.Instance; ;
 
             return CultureInfo.InvariantCulture;
         }

@@ -14,42 +14,29 @@ namespace Ploeh.AutoFixture.Kernel
     /// </remarks>
     public class NoSpecimen : IEquatable<NoSpecimen>
     {
-        private readonly object request;
+        ///// <summary>
+        ///// The instance.
+        ///// </summary>
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security",
+        //    "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes",
+        //    Justification = "The class is immutable.")]
+        //public static readonly NoSpecimen Instance = new NoSpecimen();
+
+        /// <summary>
+        /// The instance.
+        /// </summary>
+        public static NoSpecimen Instance
+        {
+            get { return new NoSpecimen(); }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NoSpecimen"/> class with a null request.
         /// </summary>
-        public NoSpecimen()
+        private NoSpecimen()
         {
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NoSpecimen"/> class with the supplied
-        /// request.
-        /// </summary>
-        /// <param name="request">
-        /// The original request that prompts the creation of this instance.
-        /// </param>
-        [Obsolete("The Request property, and the constructor that populates it, is being retired in future versions of AutoFixture, as it has turned out that no one uses it. If you're seeing this warning in AutoFixture 3.x, and, despite expectations, have a real need to use the Request property, please provide feedback on https://github.com/AutoFixture/AutoFixture/issues/475 .")]
-        public NoSpecimen(object request)
-        {
-            this.request = request;
-        }
-
-        /// <summary>
-        /// Gets the original request that prompted the creation of the current instance.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// This property value may be <see langword="null"/>.
-        /// </para>
-        /// </remarks>
-        [Obsolete("The Request property is being retired in future versions of AutoFixture, as it has turned out that no one uses it. If you're seeing this warning in AutoFixture 3.x, and, despite expectations, have a real need to use the Request property, please provide feedback on https://github.com/AutoFixture/AutoFixture/issues/475 .")]
-        public object Request
-        {
-            get { return this.request; }
-        }
-
+        
         /// <summary>
         /// Determines whether the specified <see cref="object"/> is equal to the current
         /// <see cref="NoSpecimen"/> instance.
@@ -62,11 +49,7 @@ namespace Ploeh.AutoFixture.Kernel
         public override bool Equals(object obj)
         {
             var other = obj as NoSpecimen;
-            if (other != null)
-            {
-                return this.Equals(other);
-            }
-            return base.Equals(obj);
+            return other != null ? this.Equals(other) : object.ReferenceEquals(this, obj);
         }
 
         /// <summary>
@@ -75,9 +58,7 @@ namespace Ploeh.AutoFixture.Kernel
         /// <returns>A hash code for the current <see cref="NoSpecimen"/> instance.</returns>
         public override int GetHashCode()
         {
-#pragma warning disable 618
-            return this.Request == null ? 0 : this.Request.GetHashCode();
-#pragma warning restore 618
+            return 0;
         }
 
         /// <summary>
@@ -98,9 +79,7 @@ namespace Ploeh.AutoFixture.Kernel
                 return false;
             }
 
-#pragma warning disable 618
-            return object.Equals(this.Request, other.Request);
-#pragma warning restore 618
+            return true;
         }
     }
 }

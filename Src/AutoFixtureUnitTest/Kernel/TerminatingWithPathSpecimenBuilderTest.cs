@@ -204,7 +204,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             {
                 OnCreate = (r, c) => requestQueue.Count > 0
                     ? c.Resolve(requestQueue.Dequeue())
-                    : new NoSpecimen()
+                    : NoSpecimen.Instance
             });
             var sut = new TerminatingWithPathSpecimenBuilder(tracer);
             var container = new SpecimenContext(sut);
@@ -224,7 +224,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var tracer = new DelegatingTracingBuilder(new DelegatingSpecimenBuilder
             {
                 // Returns NoSpecimen only on the last specimen request
-                OnCreate = (r, c) => (r == requests[2]) ? new NoSpecimen() : new object(),
+                OnCreate = (r, c) => (r == requests[2]) ? NoSpecimen.Instance : new object(),
             });
 
             var sut = new TerminatingWithPathSpecimenBuilder(tracer);
@@ -247,7 +247,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
                 new DelegatingTracingBuilder(
                     new DelegatingSpecimenBuilder
                     {
-                        OnCreate = (r, c) => new NoSpecimen()
+                        OnCreate = (r, c) => NoSpecimen.Instance
                     });
             var sut = new TerminatingWithPathSpecimenBuilder(tracer);
 

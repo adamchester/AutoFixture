@@ -31,7 +31,7 @@ namespace Ploeh.AutoFixture
 
             if (!typeof(MailAddress).Equals(request))
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             try
@@ -40,7 +40,7 @@ namespace Ploeh.AutoFixture
             }                    
             catch (FormatException)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
         }
 
@@ -51,7 +51,7 @@ namespace Ploeh.AutoFixture
 
             if (localPart == null || domainName == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             var email = string.Format(CultureInfo.InvariantCulture, "{0} <{0}@{1}>", localPart, domainName);

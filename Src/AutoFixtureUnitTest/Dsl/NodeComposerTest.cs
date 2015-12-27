@@ -73,7 +73,7 @@ namespace Ploeh.AutoFixtureUnitTest.Dsl
             {
                 OnCreate = (r, c) => r == request && c == context ?
                     expected :
-                    new NoSpecimen()
+                    NoSpecimen.Instance
             };
             var sut = new NodeComposer<object>(builder);
             // Exercise system

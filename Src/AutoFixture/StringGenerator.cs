@@ -51,13 +51,13 @@ namespace Ploeh.AutoFixture
         {
             if (!typeof(string).Equals(request))
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             var specimen = this.createSpecimen();
             if (specimen == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
             if (specimen is NoSpecimen)
             {

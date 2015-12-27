@@ -55,7 +55,7 @@ namespace Ploeh.AutoFixture.AutoNSubstitute
             var substituteRequest = request as SubstituteRequest;
             if (substituteRequest == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return this.substituteFactory.Create(substituteRequest.TargetType, context);

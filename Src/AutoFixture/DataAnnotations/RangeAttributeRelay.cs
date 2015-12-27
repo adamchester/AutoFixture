@@ -26,7 +26,7 @@ namespace Ploeh.AutoFixture.DataAnnotations
         {
             if (request == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             if (context == null)
@@ -37,13 +37,13 @@ namespace Ploeh.AutoFixture.DataAnnotations
             var customAttributeProvider = request as ICustomAttributeProvider;
             if (customAttributeProvider == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             var rangeAttribute = customAttributeProvider.GetCustomAttributes(typeof(RangeAttribute), inherit: true).Cast<RangeAttribute>().SingleOrDefault();
             if (rangeAttribute == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             return context.Resolve(RangeAttributeRelay.Create(rangeAttribute, request));

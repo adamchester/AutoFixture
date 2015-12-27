@@ -53,7 +53,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(null, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -80,7 +80,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(nonStringRequest, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -112,7 +112,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(stringRequest, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -121,7 +121,7 @@ namespace Ploeh.AutoFixtureUnitTest
         public void CreateFromStringRequestWhenFactoryReturnsNoSpecimenWillReturnCorrectResult()
         {
             // Fixture setup
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             var sut = new StringGenerator(() => expectedResult);
             var stringRequest = typeof(string);
             // Exercise system

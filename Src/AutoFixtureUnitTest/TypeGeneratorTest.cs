@@ -36,7 +36,7 @@ namespace Ploeh.AutoFixtureUnitTest
             var dummyContext = new DelegatingSpecimenContext();
             var result = sut.Create(request, dummyContext);
             // Verify outcome
-            var expected = new NoSpecimen();
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, result);
             // Teardown
         }

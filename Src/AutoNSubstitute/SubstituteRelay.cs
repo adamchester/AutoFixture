@@ -38,7 +38,7 @@ namespace Ploeh.AutoFixture.AutoNSubstitute
             var requestedType = request as Type;
             if (requestedType == null || !requestedType.IsAbstract)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             object substitute = context.Resolve(new SubstituteRequest(requestedType));

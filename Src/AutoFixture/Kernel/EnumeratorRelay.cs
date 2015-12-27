@@ -40,12 +40,12 @@ namespace Ploeh.AutoFixture.Kernel
 
             var t = request as Type;
             if (t == null)
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             var typeArguments = t.GetGenericArguments();
             if (typeArguments.Length != 1 ||
                 typeof (IEnumerator<>) != t.GetGenericTypeDefinition())
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             var specimenBuilder = (ISpecimenBuilder) Activator.CreateInstance(
                 typeof (EnumeratorRelay<>).MakeGenericType(typeArguments));
@@ -62,16 +62,16 @@ namespace Ploeh.AutoFixture.Kernel
 
             var t = request as Type;
             if (t == null)
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             if (t != typeof(IEnumerator<T>))
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             var enumerable =
                 context.Resolve(typeof (IEnumerable<T>)) as IEnumerable<T>;
 
             if (enumerable == null)
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             return enumerable.GetEnumerator();
         }

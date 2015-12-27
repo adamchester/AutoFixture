@@ -28,7 +28,7 @@ namespace Ploeh.AutoFixture.AutoNSubstitute.UnitTest
             // Exercise system
             object specimen = sut.Create(null, context);
             // Verify outcome
-            var expected = new NoSpecimen();
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, specimen);
             // Teardown
         }
@@ -43,7 +43,7 @@ namespace Ploeh.AutoFixture.AutoNSubstitute.UnitTest
             // Exercise system
             object specimen = sut.Create(request, context);
             // Verify outcome
-            var expected = new NoSpecimen();
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, specimen);
             // Teardown
         }
@@ -59,7 +59,7 @@ namespace Ploeh.AutoFixture.AutoNSubstitute.UnitTest
             // Exercise system
             object specimen = sut.Create(request, context);
             // Verify outcome
-            var expected = new NoSpecimen();
+            var expected = NoSpecimen.Instance;
             Assert.Equal(expected, specimen);
             // Teardown
         }

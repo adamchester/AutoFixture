@@ -74,11 +74,11 @@ namespace Ploeh.AutoFixture.AutoMoq
                 throw new ArgumentNullException("context");
 
             if (!this.mockableSpecification.IsSatisfiedBy(request))
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             var t = request as Type;
             if (t == null)
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             var result = MockRelay.ResolveMock(t, context);
             // Note: null is a valid specimen (e.g., returned by NullRecursionHandler)
@@ -87,7 +87,7 @@ namespace Ploeh.AutoFixture.AutoMoq
 
             var m = result as Mock;
             if (m == null)
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             return m.Object;
         }

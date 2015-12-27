@@ -32,12 +32,12 @@ namespace Ploeh.AutoFixture.Kernel
 
             if (delegateType == null)
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             if (!typeof(Delegate).IsAssignableFrom(delegateType))
             {
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
             }
 
             var delegateMethod = delegateType.GetMethod("Invoke");

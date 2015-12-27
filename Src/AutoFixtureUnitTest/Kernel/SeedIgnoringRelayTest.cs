@@ -26,7 +26,7 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
             var dummyContainer = new DelegatingSpecimenContext();
             var result = sut.Create(null, dummyContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
@@ -48,12 +48,12 @@ namespace Ploeh.AutoFixtureUnitTest.Kernel
         {
             // Fixture setup
             var anonymousSeed = new SeededRequest(typeof(object), new object());
-            var unableContainer = new DelegatingSpecimenContext { OnResolve = r => new NoSpecimen() };
+            var unableContainer = new DelegatingSpecimenContext { OnResolve = r => NoSpecimen.Instance };
             var sut = new SeedIgnoringRelay();
             // Exercise system
             var result = sut.Create(anonymousSeed, unableContainer);
             // Verify outcome
-            var expectedResult = new NoSpecimen();
+            var expectedResult = NoSpecimen.Instance;
             Assert.Equal(expectedResult, result);
             // Teardown
         }
