@@ -111,7 +111,7 @@ namespace Ploeh.AutoFixture.AutoMoq.UnitTest
 
         [Theory]
         [InlineData(typeof (OmitSpecimen))]
-        [InlineData(typeof (NoSpecimen))]
+        //[InlineData(typeof (NoSpecimen))]
         [InlineData(typeof (object))]
         [InlineData(typeof (StringBuilder))]
         public void ReturnsUsingFixture_Throws_WhenContextReturnsUnexpectedSpecimen(Type specimenType)
