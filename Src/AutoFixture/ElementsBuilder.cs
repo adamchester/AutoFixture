@@ -46,7 +46,7 @@ namespace Ploeh.AutoFixture
         public object Create(object request, ISpecimenContext context)
         {
             if (!typeof(T).Equals(request))
-                return new NoSpecimen();
+                return NoSpecimen.Instance;
 
             return this.elements[this.GetNextIndex()];
         }
