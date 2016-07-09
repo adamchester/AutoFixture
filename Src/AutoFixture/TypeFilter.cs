@@ -1,5 +1,5 @@
 ﻿using System;
-using Ploeh.AutoFixture.Kernel;
+using System.Reflection;
 
 namespace Ploeh.AutoFixture
 {
@@ -20,10 +20,10 @@ namespace Ploeh.AutoFixture
         {
             if (type == null)
             {
-                throw new ArgumentNullException(nameof(type));
+                throw new ArgumentNullException("type");
             }
 
-            return type.IsValueType() && !type.IsEnum() && !type.IsPrimitive();
+            return type.GetTypeInfo().IsValueType && !type.GetTypeInfo().IsEnum && !type.GetTypeInfo().IsPrimitive;
         }
     }
 }

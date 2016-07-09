@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace Ploeh.AutoFixture.Kernel
 {
@@ -26,7 +27,7 @@ namespace Ploeh.AutoFixture.Kernel
                 return false;
             }
 
-            return type.IsGenericType()
+            return type.GetTypeInfo().IsGenericType
                 && typeof(ObservableCollection<>) == type.GetGenericTypeDefinition();
         }
     }

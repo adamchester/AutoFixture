@@ -13,15 +13,15 @@ namespace Ploeh.AutoFixture.Kernel
         {
             if (parentType == null)
             {
-                throw new ArgumentNullException(nameof(parentType));
+                throw new ArgumentNullException("parentType");
             }
             if (targetType == null)
             {
-                throw new ArgumentNullException(nameof(targetType));
+                throw new ArgumentNullException("targetType");
             }
             if (parameters == null)
             {
-                throw new ArgumentNullException(nameof(parameters));
+                throw new ArgumentNullException("parameters");
             }
 
             this.score = ParameterScore.CalculateScore(parentType, targetType, parameters);
@@ -43,7 +43,7 @@ namespace Ploeh.AutoFixture.Kernel
             if (exactMatchScore > 0)
                 return exactMatchScore;
 
-            var genericParameterTypes = parentType.GetGenericArguments();
+            var genericParameterTypes = parentType.GetTypeInfo().GetGenericArguments();
             if (genericParameterTypes.Length != 1)
                 return parameters.Count() * -1;
 
@@ -59,10 +59,10 @@ namespace Ploeh.AutoFixture.Kernel
 
         private static bool IsExactMatch(Type targetType, ParameterInfo p)
         {
-            if (!p.ParameterType.IsGenericType())
+            if (!p.ParameterType.GetTypeInfo().IsGenericType)
                 return false;
 
-            var genericParameterTypes = p.ParameterType.GetGenericArguments();
+            var genericParameterTypes = p.ParameterType.GetTypeInfo().GetGenericArguments();
             if (genericParameterTypes.Length != 1)
                 return false;
 

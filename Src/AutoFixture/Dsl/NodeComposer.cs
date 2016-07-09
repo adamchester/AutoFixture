@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Ploeh.AutoFixture.Kernel;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Ploeh.AutoFixture.Dsl
 {
@@ -17,6 +17,8 @@ namespace Ploeh.AutoFixture.Dsl
         ICustomizationComposer<T>,
         ISpecimenBuilderNode
     {
+        private readonly ISpecimenBuilder builder;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="NodeComposer{T}" />
         /// class.
@@ -34,7 +36,7 @@ namespace Ploeh.AutoFixture.Dsl
         /// <seealso cref="Builder" />
         public NodeComposer(ISpecimenBuilder builder)
         {
-            this.Builder = builder;
+            this.builder = builder;
         }
 
         /// <summary>
@@ -411,9 +413,7 @@ namespace Ploeh.AutoFixture.Dsl
         {
             var m = propertyPicker.GetWritableMember().Member;
             if (m.DeclaringType != typeof(T))
-            {
-                m = typeof(T).GetProperty(m.Name) ?? (MemberInfo) typeof(T).GetField(m.Name);
-            }
+                m = typeof(T).GetTypeInfo().GetProperty(m.Name);
 
             return (NodeComposer<T>)this.ReplaceNodes(
                 with: n => n.Compose(
@@ -494,7 +494,7 @@ namespace Ploeh.AutoFixture.Dsl
         /// </remarks>
         public object Create(object request, ISpecimenContext context)
         {
-            return this.Builder.Create(request, context);
+            return this.builder.Create(request, context);
         }
 
         /// <summary>
@@ -506,7 +506,7 @@ namespace Ploeh.AutoFixture.Dsl
         /// </returns>
         public IEnumerator<ISpecimenBuilder> GetEnumerator()
         {
-            yield return this.Builder;
+            yield return this.builder;
         }
 
         /// <summary>
@@ -524,7 +524,10 @@ namespace Ploeh.AutoFixture.Dsl
         /// <summary>Gets the encapsulated builder.</summary>
         /// <value>The encapsulated builder.</value>
         /// <seealso cref="NodeComposer{T}(ISpecimenBuilder)" />
-        public ISpecimenBuilder Builder { get; }
+        public ISpecimenBuilder Builder
+        {
+            get { return this.builder; }
+        }
 
         private ISpecimenBuilderNode WithoutSeedIgnoringRelay()
         {

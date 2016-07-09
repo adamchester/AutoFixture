@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using Ploeh.AutoFixture.Kernel;
 
 namespace Ploeh.AutoFixture
@@ -47,7 +47,9 @@ namespace Ploeh.AutoFixture
             var t = request as Type;
             if (!EnumGenerator.IsEnumType(t))
             {
-                return new NoSpecimen();
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
             }
 
             lock (this.syncRoot)
@@ -58,7 +60,7 @@ namespace Ploeh.AutoFixture
 
         private static bool IsEnumType(Type t)
         {
-            return (t != null) && t.IsEnum();
+            return (t != null) && t.GetTypeInfo().IsEnum;
         }
 
         private object CreateValue(Type t)
@@ -83,25 +85,14 @@ namespace Ploeh.AutoFixture
         {
             private readonly IEnumerable<object> values;
 
-            [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "AutoFixture", Justification = "Workaround for a bug in CA: https://connect.microsoft.com/VisualStudio/feedback/details/521030/")]
             internal RoundRobinEnumEnumerable(Type enumType)
             {
                 if (enumType == null)
                 {
-                    throw new ArgumentNullException(nameof(enumType));
+                    throw new ArgumentNullException("enumType");
                 }
 
                 this.values = Enum.GetValues(enumType).Cast<object>();
-
-                if (!this.values.Any())
-                {
-                    throw new ObjectCreationException(
-                        string.Format(
-                            CultureInfo.CurrentCulture,
-                            "AutoFixture was unable to create a value for {0} since it is an enum containing no values. " +
-                            "Please add at least one value to the enum.",
-                            enumType.FullName));
-                }
             }
 
             public IEnumerator GetEnumerator()

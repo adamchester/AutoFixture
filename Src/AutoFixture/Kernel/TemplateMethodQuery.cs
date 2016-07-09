@@ -21,6 +21,9 @@ namespace Ploeh.AutoFixture.Kernel
     /// </remarks>
     public class TemplateMethodQuery : IMethodQuery
     {
+        private readonly MethodInfo template;
+        private readonly object owner;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplateMethodQuery"/> class.
         /// </summary>
@@ -28,9 +31,9 @@ namespace Ploeh.AutoFixture.Kernel
         public TemplateMethodQuery(MethodInfo template)
         {
             if (template == null)
-                throw new ArgumentNullException(nameof(template));
+                throw new ArgumentNullException("template");
 
-            this.Template = template;
+            this.template = template;
         }
 
         /// <summary>
@@ -41,24 +44,30 @@ namespace Ploeh.AutoFixture.Kernel
         public TemplateMethodQuery(MethodInfo template, object owner)
         {
             if (template == null)
-                throw new ArgumentNullException(nameof(template));
+                throw new ArgumentNullException("template");
 
             if (owner == null)
-                throw new ArgumentNullException(nameof(owner));
+                throw new ArgumentNullException("owner");
 
-            this.Owner = owner;
-            this.Template = template;
+            this.owner = owner;
+            this.template = template;
         }
 
         /// <summary>
         /// The template <see cref="MethodInfo" /> to compare.
         /// </summary>
-        public MethodInfo Template { get; }
+        public MethodInfo Template
+        {
+            get { return template; }
+        }
 
         /// <summary>
         /// The owner instance of the <see cref="MethodInfo" />.
         /// </summary>
-        public object Owner { get; }
+        public object Owner
+        {
+            get { return owner; }
+        }
 
         /// <summary>
         /// Selects the methods for the supplied type similar to <see cref="Template" />.
@@ -88,9 +97,9 @@ namespace Ploeh.AutoFixture.Kernel
         public IEnumerable<IMethod> SelectMethods(Type type)
         {
             if (type == null)
-                throw new ArgumentNullException(nameof(type));
+                throw new ArgumentNullException("type");
 
-            return from method in type.GetMethods()
+            return from method in type.GetTypeInfo().GetMethods()
                    where method.Name == Template.Name && (Owner != null || method.IsStatic)
                    let methodParameters = method.GetParameters()
                    let templateParameters = Template.GetParameters()
@@ -114,7 +123,7 @@ namespace Ploeh.AutoFixture.Kernel
 
         private bool Compare(Type parameterType, Type templateParameterType)
         {
-            if (parameterType.IsAssignableFrom(templateParameterType))
+            if (parameterType.GetTypeInfo().IsAssignableFrom(templateParameterType))
                 return true;
 
             if (parameterType.IsGenericParameter)
@@ -134,7 +143,7 @@ namespace Ploeh.AutoFixture.Kernel
         {
             return type.HasElementType ?
                 new[] { type.GetElementType() } :
-                type.GetGenericArguments();
+                type.GetTypeInfo().GetGenericArguments();
         }
 
         private class LateBindingParameterScore : IComparable<LateBindingParameterScore>
@@ -145,10 +154,10 @@ namespace Ploeh.AutoFixture.Kernel
                 IEnumerable<ParameterInfo> templateParameters)
             {
                 if (methodParameters == null)
-                    throw new ArgumentNullException(nameof(methodParameters));
+                    throw new ArgumentNullException("methodParameters");
 
                 if (templateParameters == null)
-                    throw new ArgumentNullException(nameof(templateParameters));
+                    throw new ArgumentNullException("templateParameters");
 
                 this.score = CalculateScore(methodParameters.Select(p => p.ParameterType), 
                     templateParameters.Select(p => p.ParameterType));
@@ -181,9 +190,9 @@ namespace Ploeh.AutoFixture.Kernel
 
                 var hierarchy = GetHierarchy(templateParameterType).ToList();
                 
-                var matches = methodParameterType.IsClass() ? 
-                    hierarchy.Count(t => t.IsAssignableFrom(methodParameterType)) : 
-                    hierarchy.Count(t => t.GetInterfaces().Any(i => i.IsAssignableFrom(methodParameterType)));
+                var matches = methodParameterType.GetTypeInfo().IsClass ? 
+                    hierarchy.Count(t => t.GetTypeInfo().IsAssignableFrom(methodParameterType)) : 
+                    hierarchy.Count(t => t.GetTypeInfo().GetInterfaces().Any(i => i.GetTypeInfo().IsAssignableFrom(methodParameterType)));
 
                 var score = 50 * -(hierarchy.Count - matches);
 
@@ -193,7 +202,7 @@ namespace Ploeh.AutoFixture.Kernel
                 score += CalculateScore(methodTypeArguments, templateTypeArguments) / 10;
                 score += 50 * -Math.Abs(methodTypeArguments.Length - templateTypeArguments.Length);
 
-                if (methodParameterType.IsClass())
+                if (methodParameterType.GetTypeInfo().IsClass)
                     score += 5;
                 
                 return score;
@@ -201,14 +210,14 @@ namespace Ploeh.AutoFixture.Kernel
 
             private static IEnumerable<Type> GetHierarchy(Type type)
             {
-                if (!type.IsClass())
-                    foreach (var interfaceType in type.GetInterfaces())
+                if (!type.GetTypeInfo().IsClass)
+                    foreach (var interfaceType in type.GetTypeInfo().GetInterfaces())
                         yield return interfaceType;
 
                 while (type != null)
                 {
                     yield return type;
-                    type = type.BaseType();
+                    type = type.GetTypeInfo().BaseType;
                 }
             }
         }

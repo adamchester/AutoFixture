@@ -56,17 +56,23 @@ namespace Ploeh.AutoFixture.Kernel
         public object Create(object request, ISpecimenContext context)
         {
             if (context == null)
-                throw new ArgumentNullException(nameof(context));
+                throw new ArgumentNullException("context");
 
             var pi = request as ParameterInfo;
             if (pi == null)
-                return new NoSpecimen();
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
 
-            if (!pi.ParameterType.IsGenericType())
-                return new NoSpecimen();
+            if (!pi.ParameterType.GetTypeInfo().IsGenericType)
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
 
             if (IsNotEnumerable(pi))
-                return new NoSpecimen();
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
 
             var returnValue = context.Resolve(
                 new SeededRequest(

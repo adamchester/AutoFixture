@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,14 +28,16 @@ namespace Ploeh.AutoFixture
         public object Create(object request, ISpecimenContext context)
         {
             if (context == null)
-                throw new ArgumentNullException(nameof(context));
+                throw new ArgumentNullException("context");
 
             var type = request as Type;
             if (type == null)
-                return new NoSpecimen();
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
 
             //check if type is a constructed generic type whose definition matches Task<>
-            if (type.IsGenericType() && !type.IsGenericTypeDefinition() &&
+            if (type.GetTypeInfo().IsGenericType && !type.GetTypeInfo().IsGenericTypeDefinition &&
                 type.GetGenericTypeDefinition() == typeof (Task<>))
                 return CreateGenericTask(type, context);
 
@@ -43,12 +45,14 @@ namespace Ploeh.AutoFixture
             if (type == typeof (Task))
                 return CreateNonGenericTask();
 
-            return new NoSpecimen();
+#pragma warning disable 618
+            return new NoSpecimen(request);
+#pragma warning restore 618
         }
 
         private static object CreateGenericTask(Type taskType, ISpecimenContext context)
         {
-            var resultType = taskType.GetGenericArguments().Single();
+            var resultType = taskType.GetTypeInfo().GetGenericArguments().Single();
             var result = context.Resolve(resultType);
             return CreateTask(resultType, result);
         }
@@ -63,10 +67,10 @@ namespace Ploeh.AutoFixture
             var taskSourceType = typeof (TaskCompletionSource<>).MakeGenericType(resultType);
             var taskSource = Activator.CreateInstance(taskSourceType);
 
-            taskSourceType.GetMethod("SetResult")
+            taskSourceType.GetTypeInfo().GetMethod("SetResult")
                           .Invoke(taskSource, new[] {result});
 
-            var task = taskSourceType.GetProperty("Task")
+            var task = taskSourceType.GetTypeInfo().GetProperty("Task")
                                      .GetValue(taskSource, null);
 
             return task;

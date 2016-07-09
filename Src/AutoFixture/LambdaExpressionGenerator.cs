@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Reflection;
     using Kernel;
 
     /// <summary>
@@ -38,12 +39,12 @@
                 return new NoSpecimen();
             }
 
-            if (requestType.BaseType != typeof(LambdaExpression))
+            if (requestType.GetTypeInfo().BaseType != typeof(LambdaExpression))
             {
                 return new NoSpecimen();
             }
 
-            var delegateType = requestType.GetGenericArguments().Single();
+            var delegateType = requestType.GetTypeInfo().GetGenericArguments().Single();
             var genericArguments = delegateType.GetGenericArguments().Select(Expression.Parameter).ToList();
 
             if (delegateType == typeof(Action))

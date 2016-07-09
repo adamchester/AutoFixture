@@ -1,9 +1,9 @@
 ﻿using Ploeh.AutoFixture.Kernel;
 using System;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace Ploeh.AutoFixture
 {
@@ -37,14 +37,18 @@ namespace Ploeh.AutoFixture
         public object Create(object request, ISpecimenContext context)
         {
             if (context == null)
-                throw new ArgumentNullException(nameof(context));
+                throw new ArgumentNullException("context");
 
             var t = request as Type;
-            if (t == null || !t.IsGenericType())
-                return new NoSpecimen();
+            if (t == null || !t.GetTypeInfo().IsGenericType)
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
 
             if (t.GetGenericTypeDefinition() != typeof(Lazy<>))
-                return new NoSpecimen();
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
 
             var builder = (ILazyBuilder)Activator
                 .CreateInstance(typeof(LazyBuilder<>)

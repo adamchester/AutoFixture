@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Ploeh.AutoFixture.Kernel;
 using System.Linq;
+using System.Reflection;
 
 namespace Ploeh.AutoFixture
 {
@@ -45,16 +45,16 @@ namespace Ploeh.AutoFixture
         public void Execute(object specimen, ISpecimenContext context)
         {
             if (specimen == null)
-                throw new ArgumentNullException(nameof(specimen));
+                throw new ArgumentNullException("specimen");
             if (context == null)
-                throw new ArgumentNullException(nameof(context));
+                throw new ArgumentNullException("context");
 
-            var typeArguments = specimen.GetType().GetGenericArguments();
+            var typeArguments = specimen.GetType().GetTypeInfo().GetGenericArguments();
             if (typeArguments.Length != 2)
-                throw new ArgumentException("The specimen must be an instance of IDictionary<TKey, TValue>.", nameof(specimen));
+                throw new ArgumentException("The specimen must be an instance of IDictionary<TKey, TValue>.", "specimen");
 
-            if (!typeof(IDictionary<,>).MakeGenericType(typeArguments).IsAssignableFrom(specimen.GetType()))
-                throw new ArgumentException("The specimen must be an instance of IDictionary<TKey, TValue>.", nameof(specimen));
+            if (!typeof(IDictionary<,>).MakeGenericType(typeArguments).GetTypeInfo().IsAssignableFrom(specimen.GetType()))
+                throw new ArgumentException("The specimen must be an instance of IDictionary<TKey, TValue>.", "specimen");
 
             var filler = (ISpecimenCommand)Activator.CreateInstance(
                 typeof(Filler<,>).MakeGenericType(typeArguments));

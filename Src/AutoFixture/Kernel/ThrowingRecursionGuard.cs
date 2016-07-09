@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Ploeh.AutoFixture.Kernel
 {
@@ -70,7 +71,7 @@ namespace Ploeh.AutoFixture.Kernel
             foreach (object request in this.RecordedRequests)
             {
                 Type type = request.GetType();
-                if (type.Assembly() != typeof(RecursionGuard).Assembly())
+                if (type.GetTypeInfo().Assembly != typeof(RecursionGuard).GetTypeInfo().Assembly)
                 {
                     requestInfos.Append("\t\t");
                     requestInfos.Append(request);

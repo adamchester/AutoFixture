@@ -1,6 +1,6 @@
 using System;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 
 namespace Ploeh.AutoFixture.Kernel
 {
@@ -10,6 +10,8 @@ namespace Ploeh.AutoFixture.Kernel
     /// </summary>
     public class ImplementedInterfaceSpecification : IRequestSpecification
     {
+        private readonly Type targetType;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ImplementedInterfaceSpecification"/> class.
         /// </summary>
@@ -24,17 +26,20 @@ namespace Ploeh.AutoFixture.Kernel
         {
             if (targetType == null)
             {
-                throw new ArgumentNullException(nameof(targetType));
+                throw new ArgumentNullException("targetType");
             }
 
-            this.TargetType = targetType;
+            this.targetType = targetType;
         }
 
         /// <summary>
         /// The interface <see cref="Type"/> which
         /// the requested type should implement.
         /// </summary>
-        public Type TargetType { get; }
+        public Type TargetType
+        {
+            get { return targetType; }
+        }
 
         /// <summary>
         /// Evaluates a request for a specimen.
@@ -48,7 +53,7 @@ namespace Ploeh.AutoFixture.Kernel
         {
             if (request == null)
             {
-                throw new ArgumentNullException(nameof(request));
+                throw new ArgumentNullException("request");
             }
 
             return IsRequestForType(request) &&
@@ -68,12 +73,13 @@ namespace Ploeh.AutoFixture.Kernel
 
         private bool IsSameAsTargetType(object request)
         {
-            return (Type)request == this.TargetType;
+            return (Type)request == this.targetType;
         }
 
         private bool IsInterfaceImplementedByTargetType(object request)
         {
-            return this.TargetType
+            return this.targetType
+                       .GetTypeInfo()
                        .GetInterfaces()
                        .Contains((Type)request);
         }

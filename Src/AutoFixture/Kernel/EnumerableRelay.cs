@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Ploeh.AutoFixture.Kernel
 {
@@ -33,29 +33,37 @@ namespace Ploeh.AutoFixture.Kernel
         {
             if (context == null)
             {
-                throw new ArgumentNullException(nameof(context));
+                throw new ArgumentNullException("context");
             }
 
             // This is performance-sensitive code when used repeatedly over many requests.
             // See discussion at https://github.com/AutoFixture/AutoFixture/pull/218
             var type = request as Type;
             if (type == null)
-                return new NoSpecimen();
-            var typeArgs = type.GetGenericArguments();
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
+            var typeArgs = type.GetTypeInfo().GetGenericArguments();
             if (typeArgs.Length != 1)
-                return new NoSpecimen();
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
             if (type.GetGenericTypeDefinition() != typeof(IEnumerable<>))
-                return new NoSpecimen();
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
             var specimen = context.Resolve(new MultipleRequest(typeArgs[0]));
             if (specimen is OmitSpecimen)
                 return specimen;
             var enumerable = specimen as IEnumerable<object>;
             if (enumerable == null)
-                return new NoSpecimen();
+#pragma warning disable 618
+                return new NoSpecimen(request);
+#pragma warning restore 618
 
             return typeof (ConvertedEnumerable<>)
                 .MakeGenericType(typeArgs)
-                .GetConstructor(new[] {typeof (IEnumerable<object>)})
+                .GetTypeInfo().GetConstructor(new[] {typeof (IEnumerable<object>)})
                 .Invoke(new[] {enumerable});
         }
 
@@ -67,7 +75,7 @@ namespace Ploeh.AutoFixture.Kernel
             {
                 if (enumerable == null)
                 {
-                    throw new ArgumentNullException(nameof(enumerable));
+                    throw new ArgumentNullException("enumerable");
                 }
 
                 this.enumerable = enumerable;

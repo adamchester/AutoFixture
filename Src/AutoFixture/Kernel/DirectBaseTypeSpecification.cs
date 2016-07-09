@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Ploeh.AutoFixture.Kernel
 {
@@ -8,6 +9,8 @@ namespace Ploeh.AutoFixture.Kernel
     /// </summary>
     public class DirectBaseTypeSpecification : IRequestSpecification
     {
+        private readonly Type targetType;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DirectBaseTypeSpecification"/> class.
         /// </summary>
@@ -22,17 +25,20 @@ namespace Ploeh.AutoFixture.Kernel
         {
             if (targetType == null)
             {
-                throw new ArgumentNullException(nameof(targetType));
+                throw new ArgumentNullException("targetType");
             }
 
-            this.TargetType = targetType;
+            this.targetType = targetType;
         }
 
         /// <summary>
         /// The <see cref="Type"/> from which
         /// the requested type should directly inherit.
         /// </summary>
-        public Type TargetType { get; }
+        public Type TargetType
+        {
+            get { return this.targetType; }
+        }
 
         /// <summary>
         /// Evaluates a request for a specimen.
@@ -46,7 +52,7 @@ namespace Ploeh.AutoFixture.Kernel
         {
             if (request == null)
             {
-                throw new ArgumentNullException(nameof(request));
+                throw new ArgumentNullException("request");
             }
 
             return IsRequestForType(request) &&
@@ -66,12 +72,12 @@ namespace Ploeh.AutoFixture.Kernel
 
         private bool IsSameAsTargetType(object request)
         {
-            return (Type)request == this.TargetType;
+            return (Type)request == this.targetType;
         }
 
         private bool IsDirectBaseOfTargetType(object request)
         {
-            return (Type)request == this.TargetType.BaseType();
+            return (Type)request == this.targetType.GetTypeInfo().BaseType;
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Ploeh.AutoFixture.Kernel
     /// </summary>
     public class ConstructorMethod : IMethod, IEquatable<ConstructorMethod>
     {
+        private readonly ConstructorInfo constructor;
         private readonly ParameterInfo[] paramInfos;
 
         /// <summary>
@@ -21,17 +22,20 @@ namespace Ploeh.AutoFixture.Kernel
         {
             if (constructor == null)
             {
-                throw new ArgumentNullException(nameof(constructor));
+                throw new ArgumentNullException("constructor");
             }
 
-            this.Constructor = constructor;
-            this.paramInfos = this.Constructor.GetParameters();
+            this.constructor = constructor;
+            this.paramInfos = this.constructor.GetParameters();
         }
 
         /// <summary>
         /// Gets the constructor.
         /// </summary>
-        public ConstructorInfo Constructor { get; }
+        public ConstructorInfo Constructor
+        {
+            get { return this.constructor; }
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
@@ -84,7 +88,7 @@ namespace Ploeh.AutoFixture.Kernel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "tinyurl", Justification = "Workaround for a bug in CA: https://connect.microsoft.com/VisualStudio/feedback/details/521030/")]
         public object Invoke(IEnumerable<object> parameters)
         {
-            if (this.Constructor.DeclaringType.IsAbstract() && this.Constructor.IsPublic)
+            if (this.Constructor.DeclaringType.GetTypeInfo().IsAbstract && this.Constructor.IsPublic)
             {
                 throw new ObjectCreationException(
                                 string.Format(
@@ -106,7 +110,7 @@ This will cause AutoFixture to create an instance of TestDouble every time Abstr
                                 );
 
             }
-            return this.Constructor.Invoke(parameters.ToArray());
+            return this.constructor.Invoke(parameters.ToArray());
         }
 
         /// <summary>

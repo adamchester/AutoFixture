@@ -10,6 +10,8 @@ namespace Ploeh.AutoFixture.Kernel
     /// </summary>
     public class MissingParametersSupplyingMethod : IMethod, IEquatable<MissingParametersSupplyingMethod>
     {
+        private readonly IMethod method;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MissingParametersSupplyingMethod"/> class.
         /// </summary>
@@ -17,15 +19,18 @@ namespace Ploeh.AutoFixture.Kernel
         public MissingParametersSupplyingMethod(IMethod method)
         {
             if (method == null)
-                throw new ArgumentNullException(nameof(method));
+                throw new ArgumentNullException("method");
 
-            this.Method = method;
+            this.method = method;
         }
 
         /// <summary>
         /// Gets the decorated method
         /// </summary>
-        public IMethod Method { get; }
+        public IMethod Method
+        {
+            get { return this.method; }
+        }
 
         /// <summary>
         /// Gets information about the parameters of the method.
@@ -101,7 +106,7 @@ namespace Ploeh.AutoFixture.Kernel
                 parameter.ParameterType.IsArray)
                 return Array.CreateInstance(parameter.ParameterType.GetElementType(), 0);
 
-            return parameter.ParameterType.IsValueType() ? 
+            return parameter.ParameterType.GetTypeInfo().IsValueType ? 
                 Activator.CreateInstance(parameter.ParameterType) : 
                 null;
         }

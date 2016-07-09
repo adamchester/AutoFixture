@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Ploeh.AutoFixture.Kernel
 {
@@ -19,11 +20,11 @@ namespace Ploeh.AutoFixture.Kernel
         {
             if (request == null)
             {
-                throw new ArgumentNullException(nameof(request));
+                throw new ArgumentNullException("request");
             }
 
             var type = request as Type;
-            return type != null && type.IsAbstract();
+            return type != null && type.GetTypeInfo().IsAbstract;
         }
     }
 }
